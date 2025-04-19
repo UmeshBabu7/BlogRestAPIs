@@ -1,16 +1,7 @@
-<!--DOCTYPE html -->
-<html>
- 
- 
-<body>
+{% extends "base.html" %}
+{% block title %}Detail{% endblock %}
 
-    {% if messages %}
-    <ul class="messages">
-      {% for message in messages %}
-        <li class="{{ message.tags }}">{{message}}</li>
-      {% endfor %}
-    </ul>
-  {% endif %}
+{% block content %}
 
 {{ instance.title }}<br/>
 {{ instance.content }}<br/>
@@ -18,8 +9,5 @@
 {{ instance.updated }}<br/>
 {{ instance.id }}<br/>
 
+{% endblock %}
 
-
-</body>
-
-</html>

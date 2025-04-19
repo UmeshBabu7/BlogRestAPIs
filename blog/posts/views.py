@@ -44,7 +44,7 @@ def post_list(request): #list items
           "title":"List"
      }
 
-     return render(request,'index.html',context)
+     return render(request,'post_list.html',context)
  
 
 
