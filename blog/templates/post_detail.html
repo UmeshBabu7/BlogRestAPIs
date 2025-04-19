@@ -3,8 +3,14 @@
  
  
 <body>
-<h1>{{ title }}</h1>
 
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+        <li class="{{ message.tags }}">{{message}}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
 
 {{ instance.title }}<br/>
 {{ instance.content }}<br/>
