@@ -8,7 +8,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # Create your views here.
 def post_create(request):
 
-     form=PostForm(request.POST or None)
+     form=PostForm(request.POST or None, request.FILES or None)
 
      if form.is_valid():
            instance = form.save(commit=False)
@@ -38,7 +38,7 @@ def post_detail(request,id): #retrieve
 
 def post_list(request): #list items
      
-     queryset_list = Post.objects.all() #.order_by("-timestamp")
+     queryset_list = Post.objects.all().order_by("-timestamp")
      paginator = Paginator(queryset_list,3) # Show 25 contacts per page
      page_request_var = "page"
      page = request.GET.get(page_request_var)
@@ -64,7 +64,7 @@ def post_list(request): #list items
 def post_update(request,id):
      instance=get_object_or_404(Post,id=id)
 
-     form=PostForm(request.POST or None,instance=instance)
+     form=PostForm(request.POST or None, request.FILES or None, instance=instance)
 
      if form.is_valid():
            instance = form.save(commit=False)
@@ -79,7 +79,6 @@ def post_update(request,id):
           
      return render(request,"post_form.html",context)
  
-
 
 def post_delete(request,id):
      instance=get_object_or_404(Post,id=id)
