@@ -25,7 +25,7 @@ Step 3: Install dependencies
     
     or 
     
-    $ pip install django equests 
+    $ pip install django requests 
 
 Step 4: Apply the migration if any
 
