@@ -1,4 +1,4 @@
-from django.shortcuts import render,get_object_or_404,redirect
+from django.shortcuts import render,get_object_or_404,redirect,Http404
 from django.http import HttpResponse
 from .models import Post
 from .forms import PostForm
@@ -9,6 +9,8 @@ from urllib.parse import quote_plus
 
 # Create your views here.
 def post_create(request):
+     if  not request.user.is_staff or  not request.user.is_superuser:
+           raise Http404
 
      form=PostForm(request.POST or None, request.FILES or None)
 
@@ -17,7 +19,7 @@ def post_create(request):
            print(form.cleaned_data.get("title"))
            instance.save()
            messages.success(request,"successfully created.")
-           return redirect('posts:detail',instance.id)
+           return redirect('posts:detail',instance.slug)
      
      context = {
            "form": form,
@@ -66,6 +68,8 @@ def post_list(request): #list items
 
 
 def post_update(request,slug):
+     if not request.user.is_staff or not request.user.is_superuser:
+           raise Http404
      instance=get_object_or_404(Post,slug=slug)
 
      form=PostForm(request.POST or None, request.FILES or None, instance=instance)
@@ -85,6 +89,8 @@ def post_update(request,slug):
  
 
 def post_delete(request,id):
+     if not request.user.is_staff or not request.user.is_superuser:
+           raise Http404
      instance=get_object_or_404(Post,id=id)
      instance.delete()
      messages.success(request,"successfully deleted")
